@@ -39,6 +39,11 @@ public final class Result<T> {
         this.msg = "success";
     }
 
+    private Result() {
+        this.code = 0;
+        this.msg = "success";
+    }
+
     private Result(final CodeMsg codeMsg) {
         if (codeMsg == null) {
             return;

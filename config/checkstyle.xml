@@ -74,6 +74,8 @@
         <!-- 定义检查 -->
         <!-- 检查数组类型定义的样式 -->
         <module name="ArrayTypeStyle"/>
+        <!-- 检查方法名、构造函数、catch块的参数是否是final的 -->
+         <module name="FinalParameters"/>
         <!-- 检查long型定义是否有大写的“L” -->
         <module name="UpperEll"/>
 
@@ -145,7 +147,7 @@
         <module name="InnerAssignment"/>
         <!-- 检查是否有"魔术"数字 -->
         <module name="MagicNumber">
-            <property name="ignoreNumbers" value="0, 1"/>
+            <property name="ignoreNumbers" value="-2, -1, 0, 1, 2, 3, 4, 5 "/>
             <property name="ignoreAnnotation" value="true"/>
         </module>
         <!-- 检查switch语句是否有default -->
@@ -191,9 +193,9 @@
             <property name="illegalPattern" value="true"/>
         </module>
         <!-- return个数 3个-->
-        <module name="ReturnCount">
+        <!--<module name="ReturnCount">
             <property name="max" value="3"/>
-        </module>
+        </module>-->
         <!--try catch 异常处理数量 3-->
         <module name="NestedTryDepth ">
             <property name="max" value="3"/>
