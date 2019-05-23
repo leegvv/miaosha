@@ -1,17 +1,16 @@
 package net.arver.miaosha.controller;
 
-import net.arver.miaosha.result.CodeMsg;
 import net.arver.miaosha.result.Result;
 import net.arver.miaosha.service.MiaoshaUserService;
-import net.arver.miaosha.util.ValidatorUtil;
 import net.arver.miaosha.vo.LoginVo;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.validation.Valid;
 
 /**
  * 登录controller
@@ -44,25 +43,11 @@ public class LoginController {
      */
     @RequestMapping("do_login")
     @ResponseBody
-    public Result<CodeMsg> doLogin(final LoginVo loginVo) {
+    public Result<Boolean> doLogin(@Valid final LoginVo loginVo) {
         LOGGER.info(loginVo.toString());
-        String mobile = loginVo.getMobile();
-        final String password = loginVo.getPassword();
-        if (StringUtils.isBlank(mobile)) {
-            return Result.error(CodeMsg.MOBILE_EMPTY);
-        }
-        if (StringUtils.isBlank(password)) {
-            return Result.error(CodeMsg.PASSWORD_EMPTY);
-        }
-        if (!ValidatorUtil.isMobile(mobile)) {
-            return Result.error(CodeMsg.MOBILE_ERROR);
-        }
 
-        final CodeMsg cm = miaoshaUserService.login(loginVo);
-        if (cm.getCode() == 0) {
-            return Result.success(CodeMsg.SUCCESS);
-        }
-        return Result.error(cm);
+        miaoshaUserService.login(loginVo);
+        return Result.success(Boolean.TRUE);
     }
 
 

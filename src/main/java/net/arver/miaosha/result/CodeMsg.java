@@ -11,6 +11,7 @@ public final class CodeMsg {
     // 通用异常 5001XX
     public static final CodeMsg SUCCESS = new CodeMsg(0, "success");
     public static final CodeMsg SERVER_ERROR = new CodeMsg(500100, "服务端异常");
+    public static final CodeMsg BIND_ERROR = new CodeMsg(500101, "参数异常: %s");
 
     // 登录模块 5002XX
     public static final CodeMsg SESSION_ERROR = new CodeMsg(500210, "Session不存在或已失效");
@@ -27,7 +28,7 @@ public final class CodeMsg {
 
     // 秒杀模块 5005XX
 
-    private CodeMsg(int code, String msg) {
+    private CodeMsg(final int code, final String msg) {
         this.code = code;
         this.msg = msg;
     }
@@ -38,5 +39,11 @@ public final class CodeMsg {
 
     public String getMsg() {
         return msg;
+    }
+
+    public CodeMsg fillArgs(final Object... args) {
+        final int code = this.code;
+        final String message = String.format(this.msg, args);
+        return new CodeMsg(code, message);
     }
 }
