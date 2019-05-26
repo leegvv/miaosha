@@ -6,6 +6,12 @@ import java.util.Date;
  * 用户.
  */
 public class MiaoshaUser {
+
+    /**
+     * token cookie名.
+     */
+    public static final String COOKIE_NAME_TOKEN = "token";
+
     private Long id;
     private String nickname;
     private String password;

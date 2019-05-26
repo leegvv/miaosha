@@ -26,7 +26,8 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(value = Exception.class)
     public Result<String> exceptionHandler(final HttpServletRequest request, final Exception e) {
-        if(e instanceof GlobalException) {
+        e.printStackTrace();
+        if (e instanceof GlobalException) {
             final GlobalException ex = (GlobalException) e;
             return Result.error(ex.getCodeMsg());
         } else if (e instanceof BindException) {

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 /**
@@ -38,15 +39,16 @@ public class LoginController {
 
     /**
      * 登录操作.
+     * @param response responese
      * @param loginVo 登录参数
      * @return 登录结果
      */
     @RequestMapping("do_login")
     @ResponseBody
-    public Result<Boolean> doLogin(@Valid final LoginVo loginVo) {
+    public Result<Boolean> doLogin(final HttpServletResponse response, @Valid final LoginVo loginVo) {
         LOGGER.info(loginVo.toString());
 
-        miaoshaUserService.login(loginVo);
+        miaoshaUserService.login(response, loginVo);
         return Result.success(Boolean.TRUE);
     }
 

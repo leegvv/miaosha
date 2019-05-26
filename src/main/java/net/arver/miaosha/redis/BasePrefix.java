@@ -9,11 +9,11 @@ public abstract class BasePrefix implements KeyPrefix {
 
     private int expireSeconds;
 
-    public BasePrefix(String prefix) {
+    public BasePrefix(final String prefix) {
         this.prefix = prefix;
     }
 
-    public BasePrefix(String prefix, int expireSeconds) {
+    public BasePrefix(final String prefix, final int expireSeconds) {
         this.prefix = prefix;
         this.expireSeconds = expireSeconds;
     }
