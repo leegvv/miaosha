@@ -34,7 +34,7 @@ public class UserArgumentResolver implements HandlerMethodArgumentResolver {
     public Object resolveArgument(final MethodParameter methodParameter,
                                   final ModelAndViewContainer modelAndViewContainer,
                                   final NativeWebRequest nativeWebRequest,
-                                  final WebDataBinderFactory webDataBinderFactory) throws Exception {
+                                  final WebDataBinderFactory webDataBinderFactory) {
         final HttpServletRequest request = nativeWebRequest.getNativeRequest(HttpServletRequest.class);
         final HttpServletResponse response = nativeWebRequest.getNativeResponse(HttpServletResponse.class);
         final String paramToken = request.getParameter(MiaoshaUser.COOKIE_NAME_TOKEN);
