@@ -37,8 +37,8 @@ public class UserArgumentResolver implements HandlerMethodArgumentResolver {
                                   final WebDataBinderFactory webDataBinderFactory) {
         final HttpServletRequest request = nativeWebRequest.getNativeRequest(HttpServletRequest.class);
         final HttpServletResponse response = nativeWebRequest.getNativeResponse(HttpServletResponse.class);
-        final String paramToken = request.getParameter(MiaoshaUser.COOKIE_NAME_TOKEN);
-        final String cookieToken = getCookieToken(request, MiaoshaUser.COOKIE_NAME_TOKEN);
+        final String paramToken = request.getParameter(MiaoshaUserService.COOKIE_NAME_TOKEN);
+        final String cookieToken = getCookieToken(request, MiaoshaUserService.COOKIE_NAME_TOKEN);
         if (StringUtils.isBlank(cookieToken) && StringUtils.isBlank(paramToken)) {
             return null;
         }

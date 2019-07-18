@@ -1,5 +1,8 @@
 package net.arver.miaosha.domain;
 
+/**
+ * 用户.
+ */
 public class User {
     private Integer id;
 
@@ -9,7 +12,7 @@ public class User {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(final Integer id) {
         this.id = id;
     }
 
@@ -17,7 +20,7 @@ public class User {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 }

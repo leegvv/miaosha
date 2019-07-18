@@ -22,6 +22,8 @@ import javax.servlet.http.HttpServletResponse;
 @Service
 public class MiaoshaUserService {
 
+    public static final String COOKIE_NAME_TOKEN = "token";
+
     @Autowired
     private MiaoshaUserDao miaoshaUserDao;
 
@@ -91,7 +93,7 @@ public class MiaoshaUserService {
      */
     private void addCookie(final HttpServletResponse response, final String token,  final MiaoshaUser user) {
         redisService.set(MiaoshaUserKey.TOKEN, token, user);
-        final Cookie cookie = new Cookie(MiaoshaUser.COOKIE_NAME_TOKEN, token);
+        final Cookie cookie = new Cookie(MiaoshaUserService.COOKIE_NAME_TOKEN, token);
         cookie.setMaxAge(MiaoshaUserKey.TOKEN.expireSeconds());
         cookie.setPath("/");
         response.addCookie(cookie);

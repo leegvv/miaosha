@@ -1,13 +1,16 @@
 package net.arver.miaosha.controller;
 
 import net.arver.miaosha.domain.MiaoshaUser;
-import net.arver.miaosha.service.MiaoshaUserService;
+import net.arver.miaosha.service.GoodsService;
+import net.arver.miaosha.vo.GoodsVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.List;
 
 /**
  * 登录controller
@@ -21,8 +24,11 @@ public class GoodsController {
      */
     private static final Logger LOGGER = LoggerFactory.getLogger(GoodsController.class);
 
+    /**
+     * 商品服务.
+     */
     @Autowired
-    private MiaoshaUserService miaoshaUserService;
+    private GoodsService goodsService;
 
     /**
      * 返回登录页面.
@@ -33,6 +39,8 @@ public class GoodsController {
     @RequestMapping("to_list")
     public String toList(final Model model, final MiaoshaUser user) {
         model.addAttribute("user", user);
+        final List<GoodsVo> goodsList = goodsService.listGoodsVo();
+        model.addAttribute("goodsList", goodsList);
         return "goods_list";
     }
 
