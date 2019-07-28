@@ -49,7 +49,7 @@ public class RedisService {
      * @param <T> 泛型
      * @return 缓存
      */
-    public <T> T get(KeyPrefix keyPrefix, String key, Class<T> clazz) {
+    public <T> T get(final KeyPrefix keyPrefix, final String key, final Class<T> clazz) {
         final String realKey = keyPrefix.getPrefix() + ":" + key;
         return (T) redisTemplate.opsForValue().get(realKey);
     }
@@ -60,7 +60,7 @@ public class RedisService {
      * @param key key
      * @param value 缓存值
      */
-    public void set(KeyPrefix keyPrefix, String key, Object value) {
+    public void set(final KeyPrefix keyPrefix, final String key, final Object value) {
         final String realKey = keyPrefix.getPrefix() + ":" + key;
         final int seconds = keyPrefix.expireSeconds();
         if (seconds <= 0) {
@@ -76,7 +76,7 @@ public class RedisService {
      * @param key key
      * @return 是否存在
      */
-    public boolean exist(KeyPrefix keyPrefix, String key) {
+    public boolean exist(final KeyPrefix keyPrefix, final String key) {
         final String realKey = keyPrefix.getPrefix() + key;
         return redisTemplate.hasKey(realKey);
     }
@@ -87,7 +87,7 @@ public class RedisService {
      * @param key key
      * @return 运算结果
      */
-    public Long increment(KeyPrefix keyPrefix, String key) {
+    public Long increment(final KeyPrefix keyPrefix, final String key) {
         final String realKey = keyPrefix.getPrefix() + key;
         return redisTemplate.opsForValue().increment(realKey);
     }
@@ -98,7 +98,7 @@ public class RedisService {
      * @param key key
      * @return 运算结果
      */
-    public Long decrement(KeyPrefix keyPrefix, String key) {
+    public Long decrement(final KeyPrefix keyPrefix, final String key) {
         final String realKey = keyPrefix.getPrefix() + key;
         return redisTemplate.opsForValue().decrement(realKey);
     }
