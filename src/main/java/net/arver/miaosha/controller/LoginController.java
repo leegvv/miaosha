@@ -45,11 +45,11 @@ public class LoginController {
      */
     @RequestMapping("do_login")
     @ResponseBody
-    public Result<Boolean> doLogin(final HttpServletResponse response, @Valid final LoginVo loginVo) {
+    public Result<String> doLogin(final HttpServletResponse response, @Valid final LoginVo loginVo) {
         LOGGER.info(loginVo.toString());
 
-        miaoshaUserService.login(response, loginVo);
-        return Result.success(Boolean.TRUE);
+        final String token = miaoshaUserService.login(response, loginVo);
+        return Result.success(token);
     }
 
 

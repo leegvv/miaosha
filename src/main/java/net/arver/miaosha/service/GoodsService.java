@@ -40,10 +40,11 @@ public class GoodsService {
     /**
      * 减少库存.
      * @param goods 商品
+     * @return 更新数量
      */
-    public void reduceStock(final GoodsVo goods) {
+    public int reduceStock(final GoodsVo goods) {
         final MiaoshaGoods g = new MiaoshaGoods();
         g.setGoodsId(goods.getId());
-        goodsDao.reduceStock(g);
+        return goodsDao.reduceStock(g);
     }
 }

@@ -4,6 +4,8 @@ import net.arver.miaosha.dao.OrderDao;
 import net.arver.miaosha.domain.MiaoshaOrder;
 import net.arver.miaosha.domain.MiaoshaUser;
 import net.arver.miaosha.domain.OrderInfo;
+import net.arver.miaosha.redis.OrderKey;
+import net.arver.miaosha.redis.RedisService;
 import net.arver.miaosha.vo.GoodsVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,13 +26,28 @@ public class OrderService {
     OrderDao orderDao;
 
     /**
+     * 缓存服务.
+     */
+    @Autowired
+    RedisService redisService;
+
+    /**
      * 根据用户id和商品id查询订单信息.
      * @param userId 用户id
      * @param goodsId 商品id
      * @return 秒杀订单
      */
     public MiaoshaOrder getMiaoshaOrderByUserIdAndGoodsId(final long userId, final long goodsId) {
-        return orderDao.getMiaoshaOrderByUserIdAndGoodsId(userId, goodsId);
+         MiaoshaOrder miaoshaOrder =
+                redisService.get(OrderKey.MIAOSHAORDER_BY_UID_GID, "" + userId + "_" + goodsId, MiaoshaOrder.class);
+        if (miaoshaOrder != null) {
+            return miaoshaOrder;
+        }
+        miaoshaOrder = orderDao.getMiaoshaOrderByUserIdAndGoodsId(userId, goodsId);
+        if (miaoshaOrder != null) {
+            redisService.set(OrderKey.MIAOSHAORDER_BY_UID_GID, "" + userId + "_" + goodsId, miaoshaOrder);
+        }
+        return miaoshaOrder;
     }
 
     /**
@@ -57,6 +74,7 @@ public class OrderService {
         miaoshaOrder.setOrderId(orderId);
         miaoshaOrder.setUserId(user.getId());
         orderDao.insertMiaoshaOrder(miaoshaOrder);
+        redisService.set(OrderKey.MIAOSHAORDER_BY_UID_GID, "" + user.getId() + "_" + goods.getId(), miaoshaOrder);
         return orderInfo;
     }
 

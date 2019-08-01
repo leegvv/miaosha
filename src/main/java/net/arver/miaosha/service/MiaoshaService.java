@@ -2,6 +2,8 @@ package net.arver.miaosha.service;
 
 import net.arver.miaosha.domain.MiaoshaUser;
 import net.arver.miaosha.domain.OrderInfo;
+import net.arver.miaosha.exception.GlobalException;
+import net.arver.miaosha.result.CodeMsg;
 import net.arver.miaosha.vo.GoodsVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,7 +28,10 @@ public class MiaoshaService {
      */
     public OrderInfo miaosha(final MiaoshaUser user, final GoodsVo goods) {
         //减库存、下订单、写入秒杀订单
-        goodsService.reduceStock(goods);
+        final int count = goodsService.reduceStock(goods);
+        if (count < 1) {
+            throw new GlobalException(CodeMsg.MIAO_SHA_OVER);
+        }
         return orderService.createOrder(user, goods);
 
     }

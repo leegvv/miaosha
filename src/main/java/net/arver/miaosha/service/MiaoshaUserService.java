@@ -36,7 +36,16 @@ public class MiaoshaUserService {
      * @return 用户
      */
     public MiaoshaUser getById(final long id) {
-        return miaoshaUserDao.getById(id);
+        MiaoshaUser user = redisService.get(MiaoshaUserKey.BY_ID, "" + id, MiaoshaUser.class);
+        if (user != null) {
+            return user;
+        }
+        user = miaoshaUserDao.getById(id);
+        if (user != null) {
+            redisService.set(MiaoshaUserKey.BY_ID, "" + id, MiaoshaUser.class);
+        }
+
+        return user;
     }
 
     /**
@@ -45,7 +54,7 @@ public class MiaoshaUserService {
      * @param loginVo 用户对象
      * @return 登录结果
      */
-    public boolean login(final HttpServletResponse response, final LoginVo loginVo) {
+    public String login(final HttpServletResponse response, final LoginVo loginVo) {
         if (loginVo == null) {
             throw new GlobalException(CodeMsg.SERVER_ERROR);
         }
@@ -65,7 +74,7 @@ public class MiaoshaUserService {
         }
         final String token = UUIDUtil.uuid();
         addCookie(response, token, user);
-        return true;
+        return token;
     }
 
     /**
