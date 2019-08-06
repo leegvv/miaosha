@@ -42,9 +42,10 @@ public class GoodsService {
      * @param goods 商品
      * @return 更新数量
      */
-    public int reduceStock(final GoodsVo goods) {
+    public boolean reduceStock(final GoodsVo goods) {
         final MiaoshaGoods g = new MiaoshaGoods();
         g.setGoodsId(goods.getId());
-        return goodsDao.reduceStock(g);
+        final int i = goodsDao.reduceStock(g);
+        return i > 0;
     }
 }

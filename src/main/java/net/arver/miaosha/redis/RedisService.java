@@ -50,7 +50,7 @@ public class RedisService {
      * @return 缓存
      */
     public <T> T get(final KeyPrefix keyPrefix, final String key, final Class<T> clazz) {
-        final String realKey = keyPrefix.getPrefix() + ":" + key;
+        final String realKey = genRealKey(keyPrefix, key);
         return (T) redisTemplate.opsForValue().get(realKey);
     }
 
@@ -61,7 +61,7 @@ public class RedisService {
      * @param value 缓存值
      */
     public void set(final KeyPrefix keyPrefix, final String key, final Object value) {
-        final String realKey = keyPrefix.getPrefix() + ":" + key;
+        final String realKey = genRealKey(keyPrefix, key);
         final int seconds = keyPrefix.expireSeconds();
         if (seconds <= 0) {
             redisTemplate.opsForValue().set(realKey, value);
@@ -77,7 +77,7 @@ public class RedisService {
      * @return 是否存在
      */
     public boolean exist(final KeyPrefix keyPrefix, final String key) {
-        final String realKey = keyPrefix.getPrefix() + key;
+        final String realKey = genRealKey(keyPrefix, key);
         return redisTemplate.hasKey(realKey);
     }
 
@@ -88,7 +88,7 @@ public class RedisService {
      * @return 运算结果
      */
     public Long increment(final KeyPrefix keyPrefix, final String key) {
-        final String realKey = keyPrefix.getPrefix() + key;
+        final String realKey = genRealKey(keyPrefix, key);
         return redisTemplate.opsForValue().increment(realKey);
     }
 
@@ -99,8 +99,18 @@ public class RedisService {
      * @return 运算结果
      */
     public Long decrement(final KeyPrefix keyPrefix, final String key) {
-        final String realKey = keyPrefix.getPrefix() + key;
+        final String realKey = genRealKey(keyPrefix, key);
         return redisTemplate.opsForValue().decrement(realKey);
+    }
+
+    /**
+     * 生成rediskey.
+     * @param keyPrefix 前缀
+     * @param key key
+     * @return real key
+     */
+    private String genRealKey(final KeyPrefix keyPrefix, final String key) {
+        return keyPrefix.getPrefix() + ":" + key;
     }
 
 }

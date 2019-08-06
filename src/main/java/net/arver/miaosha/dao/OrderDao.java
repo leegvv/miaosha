@@ -45,4 +45,6 @@ public interface OrderDao {
             statement = "select last_insert_id()")
     long insertMiaoshaOrder(MiaoshaOrder miaoshaOrder);
 
+    @Select("select * from order_info where id = #{orderId}")
+    OrderInfo getOrderById(long orderId);
 }

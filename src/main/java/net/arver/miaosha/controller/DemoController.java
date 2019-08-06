@@ -1,6 +1,7 @@
 package net.arver.miaosha.controller;
 
 import net.arver.miaosha.domain.User;
+import net.arver.miaosha.rabbitmq.MQSender;
 import net.arver.miaosha.redis.RedisService;
 import net.arver.miaosha.redis.UserKey;
 import net.arver.miaosha.result.Result;
@@ -16,10 +17,41 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class DemoController {
 
     @Autowired
-    private UserService userService;
+    UserService userService;
 
     @Autowired
-    private RedisService redisService;
+    RedisService redisService;
+
+    @Autowired
+    MQSender mqSender;
+
+    /*@RequestMapping("/mq/header")
+    @ResponseBody
+    public Result<String> header() {
+        mqSender.sendHeader("hello header");
+        return Result.success("Hello Header");
+    }
+
+    @RequestMapping("mq/fanout")
+    @ResponseBody
+    public Result<String> fanout() {
+        mqSender.sendFanout("hello fanout");
+        return Result.success("Hello fanout");
+    }
+
+    @RequestMapping("mq/topic")
+    @ResponseBody
+    public Result<String> topic() {
+        mqSender.sendTopic("hello world");
+        return Result.success("Hello world");
+    }
+
+    @RequestMapping("mq")
+    @ResponseBody
+    public Result<String> mq() {
+        mqSender.send("Hello Arver");
+        return Result.success("Hello arver");
+    }*/
 
     @RequestMapping("/thymeleaf")
     public String thymeleaf(final Model model) {
