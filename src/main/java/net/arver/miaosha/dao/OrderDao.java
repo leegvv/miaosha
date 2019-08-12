@@ -2,6 +2,7 @@ package net.arver.miaosha.dao;
 
 import net.arver.miaosha.domain.MiaoshaOrder;
 import net.arver.miaosha.domain.OrderInfo;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -45,6 +46,23 @@ public interface OrderDao {
             statement = "select last_insert_id()")
     long insertMiaoshaOrder(MiaoshaOrder miaoshaOrder);
 
+    /**
+     * 根据id查询订单.
+     * @param orderId 订单id
+     * @return 订单信息
+     */
     @Select("select * from order_info where id = #{orderId}")
     OrderInfo getOrderById(long orderId);
+
+    /**
+     * 删除订单.
+     */
+    @Delete("delete from order_info")
+    void deleteOrders();
+
+    /**
+     * 删除秒杀订单信息.
+     */
+    @Delete("delete from miaosha_order")
+    void deleteMiaoshaOrders();
 }

@@ -48,4 +48,17 @@ public class GoodsService {
         final int i = goodsDao.reduceStock(g);
         return i > 0;
     }
+
+    /**
+     * 重置库存.
+     * @param goodsList 货物集合
+     */
+    public void resetStock(final List<GoodsVo> goodsList) {
+        for (GoodsVo goodsVo : goodsList) {
+            final MiaoshaGoods goods = new MiaoshaGoods();
+            goods.setGoodsId(goodsVo.getId());
+            goods.setStockCount(goodsVo.getStockCount());
+            goodsDao.resetStock(goods);
+        }
+    }
 }

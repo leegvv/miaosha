@@ -78,8 +78,20 @@ public class OrderService {
         return orderInfo;
     }
 
-
+    /**
+     * 根据id查询订单.
+     * @param orderId 订单id
+     * @return 订单信息
+     */
     public OrderInfo getOrderById(final long orderId) {
         return orderDao.getOrderById(orderId);
+    }
+
+    /**
+     * 删除订单.
+     */
+    public void deleteOrders() {
+        orderDao.deleteOrders();
+        orderDao.deleteMiaoshaOrders();
     }
 }

@@ -12,6 +12,9 @@ public final class CodeMsg {
     public static final CodeMsg SUCCESS = new CodeMsg(0, "success");
     public static final CodeMsg SERVER_ERROR = new CodeMsg(500100, "服务端异常");
     public static final CodeMsg BIND_ERROR = new CodeMsg(500101, "参数异常: %s");
+    public static final CodeMsg REQUEST_ILLEGAL = new CodeMsg(500102, "请求非法");
+    public static final CodeMsg VERIFYCODE_ERROR = new CodeMsg(500103, "验证码错误");
+    public static final CodeMsg ACCESS_LIMIT_REACHED = new CodeMsg(500104, "访问太频繁！");
 
     // 登录模块 5002XX
     public static final CodeMsg SESSION_ERROR = new CodeMsg(500210, "Session不存在或已失效");
@@ -30,6 +33,7 @@ public final class CodeMsg {
     // 秒杀模块 5005XX
     public static final CodeMsg MIAO_SHA_OVER = new CodeMsg(500500, "商品已经秒杀完毕");
     public static final CodeMsg REPEATE_MIAOSHA = new CodeMsg(500501, "不能重复秒杀");
+    public static final CodeMsg MIAOSHA_FAIL = new CodeMsg(500502, "秒杀失败");
 
     private CodeMsg(final int code, final String msg) {
         this.code = code;

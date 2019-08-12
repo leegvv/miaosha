@@ -10,6 +10,7 @@ import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -68,6 +69,31 @@ public class RedisService {
         } else {
             redisTemplate.opsForValue().set(realKey, value, seconds, TimeUnit.SECONDS);
         }
+    }
+
+    /**
+     * 删除缓存.
+     * @param keyPrefix key前缀
+     * @param key key
+     * @return 删除结果
+     */
+    public boolean delete(final KeyPrefix keyPrefix, final String key) {
+        final String realKey = genRealKey(keyPrefix, key);
+        return redisTemplate.delete(realKey);
+    }
+
+    /**
+     * 删除指定key前缀的所有索引.
+     * @param keyPrefix key前缀
+     * @return 是否删除成功
+     */
+    public boolean delete(final KeyPrefix keyPrefix) {
+        if (keyPrefix == null) {
+            return false;
+        }
+        final Set keys = redisTemplate.keys(keyPrefix.getPrefix() + "*");
+        redisTemplate.delete(keys);
+        return true;
     }
 
     /**
